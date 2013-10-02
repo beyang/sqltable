@@ -13,9 +13,6 @@ angular.module('sqltable', [
     replace: true,
     scope: {},
     templateUrl: '/sqltable/sqltable.tpl.html',
-    // link: function(scope, elem, attr) {
-    //   // TODO
-    // },
     controller: function($scope, sqltableServer) {
       $scope.updateQuery = function($event) {
         $scope.query = $scope.queryInProgress;
