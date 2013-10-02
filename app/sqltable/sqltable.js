@@ -2,12 +2,16 @@ angular.module('sqltable', [
 
 ])
 
+.factory('sqltableServer', function($resource) {
+  return $resource('/query', {}, {});
+})
+
 .directive('sqltable', function() {
   return {
     restrict: 'E',
     replace: true,
     scope: {},
-    templateUrl: '/src/sqltable.tpl.html',
+    templateUrl: '/sqltable/sqltable.tpl.html',
     // link: function(scope, elem, attr) {
     //   // TODO
     // },

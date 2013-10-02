@@ -30,7 +30,8 @@ func main() {
 	}
 
 	// Server
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	http.Handle("/", http.StripPrefix("/", http.FileServer(http.Dir("app/"))))
+	http.HandleFunc("/query", func(w http.ResponseWriter, r *http.Request) {
 		query := r.URL.Query().Get("query")
 		log.Printf("Query received: %s", query)
 
@@ -83,5 +84,6 @@ func main() {
 		}
 		w.Write(resp)
 	})
+	log.Println("Serving on :8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
