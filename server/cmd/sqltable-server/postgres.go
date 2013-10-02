@@ -11,8 +11,8 @@ import (
 )
 
 type Result struct {
-	ColumnNames []string
-	Rows        [][]interface{}
+	ColumnNames []string        `json:"columnNames"`
+	Rows        [][]interface{} `json:"rows"`
 }
 
 func main() {

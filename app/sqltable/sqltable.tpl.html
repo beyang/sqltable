@@ -1,17 +1,13 @@
 <div>
-  <label>Columns</label>
-  <input class="sqltable-select" ng-model="select"></input>
-  <label>Table</label>
-  <input class="sqltable-from" ng-model="from"></input>
-  <label>Filter</label>
-  <input class="sqltable-where" ng-model="where"></input>
-  <label>Group</label>
-  <input class="sqltable-group-by" ng-model="groupBy"></input>
-  <label>Sort</label>
-  <input class="sqltable-order-by" ng-model="orderBy"></input>
-
-  <div class="query">Query: {{query}}</div>
-
+  <label>Query</label>
+  <input style="width:100%;" class="sqltable-query" ng-model="queryInProgress" ui-keypress="{'enter': 'updateQuery($event)'}"></input>
+  <div class="query">{{query}}</div>
   <table class="sqltable-table">
+    <tr>
+      <th ng-repeat="columnName in data.columnNames">{{columnName}}</th>
+    </tr>
+    <tr ng-repeat="row in data.rows">
+      <td ng-repeat="col in row track by $index">{{col}}</td>
+    </tr>
   </table>
 </div>
