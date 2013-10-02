@@ -1,3 +1,17 @@
-<table class="sqltable-table">
-  <tr><td>Hello world</td></tr>
-</table>
+<div>
+  <label>Columns</label>
+  <input class="sqltable-select" ng-model="select"></input>
+  <label>Table</label>
+  <input class="sqltable-from" ng-model="from"></input>
+  <label>Filter</label>
+  <input class="sqltable-where" ng-model="where"></input>
+  <label>Group</label>
+  <input class="sqltable-group-by" ng-model="groupBy"></input>
+  <label>Sort</label>
+  <input class="sqltable-order-by" ng-model="orderBy"></input>
+
+  <div class="query">Query: {{query}}</div>
+
+  <table class="sqltable-table">
+  </table>
+</div>
