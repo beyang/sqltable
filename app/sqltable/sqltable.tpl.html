@@ -1,7 +1,21 @@
 <div>
-  <label>Query</label>
-  <input style="width:100%;" class="sqltable-query" ng-model="queryInProgress" ui-keypress="{'enter': 'updateQuery($event)'}"></input>
-  <div class="query">{{query}}</div>
+  <label>Select</label>
+  <textarea ng-model="select" class="sqltable-select" ng-keyup="updateQuery()"></textarea>
+
+  <label>From</label>
+  <textarea ng-model="from" class="sqltable-from" ng-keyup="updateQuery()"></textarea>
+
+  <label>Where</label>
+  <textarea ng-model="where" class="sqltable-where" ng-keyup="updateQuery()"></textarea>
+
+  <label>Group by</label>
+  <textarea ng-model="groupBy" class="sqltable-group-by" ng-keyup="updateQuery()"></textarea>
+
+  <label>Order by</label>
+  <textarea ng-model="orderBy" class="sqltable-order-by" ng-keyup="updateQuery()"></textarea>
+
+  <div class="query">Query: {{queryString()}}</div>
+
   <table class="sqltable-table">
     <tr>
       <th ng-repeat="columnName in data.columnNames">{{columnName}}</th>

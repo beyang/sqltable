@@ -5,7 +5,8 @@
   <title>Example use of SQLTable</title>
 </head>
 <body>
-  <sqltable query="select * from track.instance"></sqltable>
+  <sqltable select="count(*)" from="track.instance" where="" groupby="client_id
+instance.user" orderby=""></sqltable>
 
   <!-- <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script> -->
   <script src="vendor/angular/angular.js"></script>
