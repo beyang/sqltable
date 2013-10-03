@@ -65,6 +65,7 @@ angular.module('sqltable', [
       console.log('initing table');
 
       // Wiring
+      $scope.showControls = false;
       $scope.rowSubQueries = {};
       $scope.queryString = function() {
         return queryToString($scope.query);
@@ -125,7 +126,7 @@ angular.module('sqltable', [
         } else {
           console.log('nothing to drill');
         }
-      }
+      };
 
       // Initialization
       $scope.updateQuery();

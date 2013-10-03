@@ -1,22 +1,35 @@
 <div>
-  <label>Select</label>
-  <textarea ng-model="select" class="sqltable-select" ng-keyup="updateQuery()"></textarea>
-
-  <label>From</label>
-  <textarea ng-model="from" class="sqltable-from" ng-keyup="updateQuery()"></textarea>
-
-  <label>Where</label>
-  <textarea ng-model="where" class="sqltable-where" ng-keyup="updateQuery()"></textarea>
-
-  <label>Group by</label>
-  <textarea ng-model="groupBy" class="sqltable-group-by" ng-keyup="updateQuery()"></textarea>
-
-  <label>Order by</label>
-  <textarea ng-model="orderBy" class="sqltable-order-by" ng-keyup="updateQuery()"></textarea>
-
-  <div class="query">Query: <strong>{{queryString()}}</strong></div>
 
   <table class="table table-condensed sqltable-table">
+    <tr>
+      <th colspan="{{data.columnNames.length}}">
+        <div class="query" ng-click="showControls=!showControls">{{queryString()}}</div>
+        <form class="form form-inline" ng-show="showControls">
+          <div class="form-group">
+            <label>Select</label>
+            <textarea rows="3" placeholder="select" ng-model="select" class="form-control sqltable-select" ng-keyup="updateQuery()"></textarea>
+          </div>
+          <div class="form-group">
+            <label>From</label>
+            <textarea rows="3" ng-model="from" class="form-control sqltable-from" ng-keyup="updateQuery()"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Where</label>
+            <textarea rows="3" ng-model="where" class="form-control sqltable-where" ng-keyup="updateQuery()"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Group by</label>
+            <textarea rows="3" ng-model="groupBy" class="form-control sqltable-group-by" ng-keyup="updateQuery()"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Order by</label>
+            <textarea rows="3" ng-model="orderBy" class="form-control sqltable-order-by" ng-keyup="updateQuery()"></textarea>
+          </div>
+        </form>
+      </th>
+    </tr>
+
+
     <tr>
       <th ng-repeat="columnName in data.columnNames">{{columnName}}</th>
     </tr>
