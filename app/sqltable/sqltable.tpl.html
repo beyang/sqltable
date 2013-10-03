@@ -20,8 +20,15 @@
     <tr>
       <th ng-repeat="columnName in data.columnNames">{{columnName}}</th>
     </tr>
-    <tr ng-repeat="row in data.rows">
-      <td ng-repeat="col in row track by $index" ng-dblclick="expandGroup($parent.$index, $index)">{{col}}</td>
-    </tr>
+    <tbody ng-repeat="row in data.rows">
+      <tr>
+        <td ng-repeat="col in row track by $index" ng-dblclick="toggleExpandRow($parent.$index, $index)">{{col}}</td>
+      </tr>
+      <tr ng-if="rowSubQueries[$index]">
+        <td colspan="{{row.length}}">
+          <sqltable-wrapper query="{{rowSubQueries[$index]}}"></sqltable-wrapper>
+        </td>
+      </tr>
+    </tbody>
   </table>
 </div>
