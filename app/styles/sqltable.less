@@ -1,11 +1,18 @@
 @import "../vendor/bootstrap/less/variables.less";
 
 table.sqltable-table {
-    background-color: lighten(@brand-primary, 30%);
+    margin: 0;
+
+    border: 1px solid @gray-lighter;
+
+    .header {
+        background-color: @gray-light;
+        color: white;
+    }
+
     tbody {
-        border-top: 1px solid #ddd;
+        border-top: 1px solid @gray-lighter;
         &:nth-child(odd) {
-            // background-color: @gray-lighter;
             background-color: rgba(0, 0, 0, 0.1);
         }
     }

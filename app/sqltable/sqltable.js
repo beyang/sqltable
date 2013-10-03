@@ -59,8 +59,14 @@ angular.module('sqltable', [
       where: "@where",
       groupBy: "@groupby",
       orderBy: "@orderby",
+      backgroundColor: "@backgroundColor",
     },
     templateUrl: '/sqltable/sqltable.tpl.html',
+    link: function(scope, elem, attr) {
+      if (scope.backgroundColor) {
+        elem.css('backgroundColor', scope.backgroundColor);
+      }
+    },
     controller: function($scope, sqltableServer, queryToString) {
       console.log('initing table');
 
