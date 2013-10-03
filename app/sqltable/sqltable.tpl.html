@@ -14,12 +14,13 @@
   <label>Order by</label>
   <textarea ng-model="orderBy" class="sqltable-order-by" ng-keyup="updateQuery()"></textarea>
 
-  <div class="query">Query: {{queryString()}}</div>
+  <div class="query">Query: <strong>{{queryString()}}</strong></div>
 
-  <table class="sqltable-table">
+  <table class="table table-condensed sqltable-table">
     <tr>
       <th ng-repeat="columnName in data.columnNames">{{columnName}}</th>
     </tr>
+
     <tbody ng-repeat="row in data.rows">
       <tr>
         <td ng-repeat="col in row track by $index" ng-dblclick="toggleExpandRow($parent.$index, $index)">{{col}}</td>
