@@ -16,7 +16,7 @@ angular.module('sqltable', [
       return "";
     }
 
-    var str = 'SELECT ' + query.select.join(', ') + ' FROM ' + query.from.join(', ');
+    var str = 'SELECT ' + query.groupBy.concat(query.select).join(', ') + ' FROM ' + query.from.join(', ');
     if (query.where.length > 0) {
       str += ' WHERE (' + query.where.join(') AND (') + ')';
     }
@@ -79,13 +79,42 @@ angular.module('sqltable', [
 
       $scope.updateQuery = function() {
         $scope.query = {
-          'select': ($scope.groupBy ? $scope.groupBy.split('\n') : []).concat($scope.select ? $scope.select.split('\n') : []),
+          'select': ($scope.select ? $scope.select.split('\n') : []),
           'from' : ($scope.from ? $scope.from.split('\n') : []),
           'where' : ($scope.where ? $scope.where.split('\n') : []),
           'groupBy' : ($scope.groupBy ? $scope.groupBy.split('\n') : []),
           'orderBy' : ($scope.orderBy ? $scope.orderBy.split('\n') : []),
         };
 
+        $scope.data = sqltableServer.get({'query':$scope.queryString()});
+      };
+
+      var updateInputs = function () {
+        $scope.select = $scope.query.select.join('\n');
+        $scope.from = $scope.query.from.join('\n');
+        $scope.where = $scope.query.where.join('\n');
+        $scope.groupBy = $scope.query.groupBy.join('\n');
+        $scope.orderBy = $scope.query.orderBy.join('\n');
+      }
+
+      $scope.toggleGroupBy = function(col) {
+        if (col < $scope.query.groupBy.length) {
+          // group column
+          $scope.query.groupBy.splice(col, 1);
+        } else {
+          // select column
+          var selectClause;
+          if ($scope.query.select.length === 1 && $scope.query.select[0].trim() === '*') {
+            selectClause = $scope.data.columnNames[col];
+          } else {
+            var numGroupBys = $scope.query.groupBy ? $scope.query.groupBy.length : 0;
+            var selIndex = col - numGroupBys;
+            selectClause = $scope.query.select[selIndex];
+          }
+          $scope.query.groupBy.push(selectClause);
+          $scope.query.select = ['count(*)'];
+        }
+        updateInputs();
         $scope.data = sqltableServer.get({'query':$scope.queryString()});
       };
 
