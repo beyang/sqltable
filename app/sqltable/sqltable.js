@@ -60,6 +60,7 @@ angular.module('sqltable', [
       where: "@where",
       groupBy: "@groupBy",
       orderBy: "@orderBy",
+      notRoot: "@notRoot",
       backgroundColor: "@backgroundColor",
     },
     templateUrl: '/sqltable/sqltable.tpl.html',
@@ -81,13 +82,15 @@ angular.module('sqltable', [
       };
 
       var saveQuery = function() {
-        $state.go('table', {
-          select: $scope.query.select.join('\n'),
-          from: $scope.query.from.join('\n'),
-          where: $scope.query.where.join('\n'),
-          groupBy: $scope.query.groupBy.join('\n'),
-          orderBy: $scope.query.orderBy.join('\n'),
-        });
+        if (!$scope.notRoot) {
+          $state.go('table', {
+            select: $scope.query.select.join('\n'),
+            from: $scope.query.from.join('\n'),
+            where: $scope.query.where.join('\n'),
+            groupBy: $scope.query.groupBy.join('\n'),
+            orderBy: $scope.query.orderBy.join('\n'),
+          });
+        }
         syncDataToQuery();
       };
 
@@ -188,13 +191,14 @@ angular.module('sqltable', [
       };
 
       $scope.seeAll = function() {
-        $state.go('table', {
-          select: '*',
-          from: $scope.query.from.join('\n'),
-          where: '',
-          groupBy: '',
-          orderBy: '',
-        });
+        $scope.query = {
+          select: ['*'],
+          from: $scope.query.from,
+          where: $scope.query.where,
+          groupBy: [],
+          orderBy: [],
+        };
+        saveQuery();
       };
 
       // Initialization
