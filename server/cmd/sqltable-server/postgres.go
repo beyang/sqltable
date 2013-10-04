@@ -45,7 +45,8 @@ func main() {
 		newRows := make([][]interface{}, 0)
 		for rows.Next() {
 			if err != nil {
-				log.Print(err)
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
 			}
 
 			vals := make([]interface{}, len(colNames))
@@ -54,7 +55,8 @@ func main() {
 			}
 			err = rows.Scan(vals...)
 			if err != nil {
-				log.Print(err)
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
 			}
 
 			newVals := make([]interface{}, len(vals))

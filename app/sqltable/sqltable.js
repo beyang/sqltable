@@ -73,7 +73,12 @@ angular.module('sqltable', [
 
       // Wiring
       var syncDataToQuery = function() {
-        $scope.data = sqltableServer.get({'query':$scope.queryString()});
+        $scope.data = sqltableServer.get({'query':$scope.queryString()}, function(){
+          $scope.error = undefined;
+        }, function(response) {
+          console.log(response);
+          $scope.error = response.data;
+        });
       };
 
       var saveQuery = function() {
@@ -87,7 +92,7 @@ angular.module('sqltable', [
         setTimeout(function() {
           console.log($scope.select);
         }, 100);
-        $scope.data = sqltableServer.get({'query':$scope.queryString()});
+        syncDataToQuery();
       };
 
       var updateInputs = function () {
