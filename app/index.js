@@ -4,12 +4,17 @@ angular.module('sqltable-example', [
 ])
 
 .config(function($stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise('/table?select=count(*)&from=track.instance&where=&groupBy=client_id&orderBy=');
+  $urlRouterProvider.otherwise('/table');
 
   $stateProvider.state('table', {
     url: '/table?select&from&where&groupBy&orderBy',
     templateProvider: function($stateParams) {
-      return '<sqltable select="'+$stateParams.select+'" from="'+$stateParams.from+'" where="'+$stateParams.where+'" group-by="'+$stateParams.groupBy+'" order-by="'+$stateParams.orderBy+'" background-color="white"></sqltable>';
+      var select = $stateParams.select ? $stateParams.select : '';
+      var from = $stateParams.from ? $stateParams.from : '';
+      var where = $stateParams.where ? $stateParams.where : '';
+      var groupBy = $stateParams.groupBy ? $stateParams.groupBy : '';
+      var orderBy = $stateParams.orderBy ? $stateParams.orderBy : '';
+      return '<sqltable select="'+select+'" from="'+from+'" where="'+where+'" group-by="'+groupBy+'" order-by="'+orderBy+'" background-color="white"></sqltable>';
     },
   });
 })

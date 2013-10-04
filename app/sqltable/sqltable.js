@@ -106,7 +106,7 @@ angular.module('sqltable', [
             orderBy: $scope.query.orderBy.join('\n'),
           });
         }
-        syncDataToQuery();
+        syncDataToQueryNow();
       };
 
       var updateInputs = function () {
@@ -125,7 +125,7 @@ angular.module('sqltable', [
       }
 
       // Handlers
-      $scope.updateQuery = function() {
+      var updateQuery = function() {
         $scope.query = {
           'select': ($scope.select ? $scope.select.split('\n') : []),
           'from' : ($scope.from ? $scope.from.split('\n') : []),
@@ -133,6 +133,10 @@ angular.module('sqltable', [
           'groupBy' : ($scope.groupBy ? $scope.groupBy.split('\n') : []),
           'orderBy' : ($scope.orderBy ? $scope.orderBy.split('\n') : []),
         };
+      };
+
+      $scope.updateQueryAndSyncData = function() {
+        updateQuery();
         syncDataToQuery();
       };
 
@@ -161,7 +165,7 @@ angular.module('sqltable', [
           $scope.query.select = ['count(*)'];
         }
         updateInputs();
-        syncDataToQuery();
+        syncDataToQueryNow();
         saveQuery();
       };
 
@@ -219,7 +223,17 @@ angular.module('sqltable', [
       };
 
       // Initialization
-      $scope.updateQuery();
+      updateQuery();
+      if (($scope.select && $scope.select.length > 0) ||
+          ($scope.from && $scope.from.length > 0) ||
+          ($scope.where && $scope.where.length > 0) ||
+          ($scope.groupBy && $scope.groupBy.length > 0) ||
+          ($scope.orderBy && $scope.orderBy.length > 0)) {
+        syncDataToQueryNow();
+      } else {
+        $scope.showControls = true;
+        $scope.error = "Enter a SQL query";
+      }
     },
   };
 })

@@ -10,23 +10,23 @@
         <form class="form form-inline" ng-show="showControls">
           <div class="form-group">
             <label>Select</label>
-            <textarea rows="3" placeholder="select" ng-model="select" class="form-control sqltable-select" ng-keyup="updateQuery()"></textarea>
+            <textarea rows="3" placeholder="select" ng-model="select" class="form-control sqltable-select" ng-keyup="updateQueryAndSyncData()"></textarea>
           </div>
           <div class="form-group">
             <label>From</label>
-            <textarea rows="3" ng-model="from" class="form-control sqltable-from" ng-keyup="updateQuery()"></textarea>
+            <textarea rows="3" placeholder="from" ng-model="from" class="form-control sqltable-from" ng-keyup="updateQueryAndSyncData()"></textarea>
           </div>
           <div class="form-group">
             <label>Where</label>
-            <textarea rows="3" ng-model="where" class="form-control sqltable-where" ng-keyup="updateQuery()"></textarea>
+            <textarea rows="3" placeholder="where" ng-model="where" class="form-control sqltable-where" ng-keyup="updateQueryAndSyncData()"></textarea>
           </div>
           <div class="form-group">
             <label>Group by</label>
-            <textarea rows="3" ng-model="groupBy" class="form-control sqltable-group-by" ng-keyup="updateQuery()"></textarea>
+            <textarea rows="3" placeholder="group by" ng-model="groupBy" class="form-control sqltable-group-by" ng-keyup="updateQueryAndSyncData()"></textarea>
           </div>
           <div class="form-group">
             <label>Order by</label>
-            <textarea rows="3" ng-model="orderBy" class="form-control sqltable-order-by" ng-keyup="updateQuery()"></textarea>
+            <textarea rows="3" placeholder="order by" ng-model="orderBy" class="form-control sqltable-order-by" ng-keyup="updateQueryAndSyncData()"></textarea>
           </div>
         </form>
         <div class="error-message">
