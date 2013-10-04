@@ -27,6 +27,7 @@ angular.module('sqltable', [
     if (query.orderBy.length > 0) {
       str += ' ORDER BY ' + query.orderBy.join(', ');
     }
+    str += ' LIMIT 100';
     return str;
   };
 })
