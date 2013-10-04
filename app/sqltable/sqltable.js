@@ -1,6 +1,7 @@
 angular.module('sqltable', [
   'ngResource',
   'ui.directives',
+  'ui.router',
 ])
 
 .factory('sqltableServer', function($resource) {
@@ -57,8 +58,8 @@ angular.module('sqltable', [
       select: "@select",
       from: "@from",
       where: "@where",
-      groupBy: "@groupby",
-      orderBy: "@orderby",
+      groupBy: "@groupBy",
+      orderBy: "@orderBy",
       backgroundColor: "@backgroundColor",
     },
     templateUrl: '/sqltable/sqltable.tpl.html',
@@ -67,10 +68,36 @@ angular.module('sqltable', [
         elem.css('backgroundColor', scope.backgroundColor);
       }
     },
-    controller: function($scope, sqltableServer, queryToString) {
+    controller: function($scope, $state, sqltableServer, queryToString) {
       console.log('initing table');
 
       // Wiring
+      var syncDataToQuery = function() {
+        $scope.data = sqltableServer.get({'query':$scope.queryString()});
+      };
+
+      var saveQuery = function() {
+        $state.go('table', {
+          select: $scope.query.select.join('\n'),
+          from: $scope.query.from.join('\n'),
+          where: $scope.query.where.join('\n'),
+          groupBy: $scope.query.groupBy.join('\n'),
+          orderBy: $scope.query.orderBy.join('\n'),
+        });
+        setTimeout(function() {
+          console.log($scope.select);
+        }, 100);
+        $scope.data = sqltableServer.get({'query':$scope.queryString()});
+      };
+
+      var updateInputs = function () {
+        $scope.select = $scope.query.select.join('\n');
+        $scope.from = $scope.query.from.join('\n');
+        $scope.where = $scope.query.where.join('\n');
+        $scope.groupBy = $scope.query.groupBy.join('\n');
+        $scope.orderBy = $scope.query.orderBy.join('\n');
+      }
+
       $scope.showControls = false;
       $scope.rowSubQueries = {};
       $scope.queryString = function() {
@@ -85,17 +112,15 @@ angular.module('sqltable', [
           'groupBy' : ($scope.groupBy ? $scope.groupBy.split('\n') : []),
           'orderBy' : ($scope.orderBy ? $scope.orderBy.split('\n') : []),
         };
-
-        $scope.data = sqltableServer.get({'query':$scope.queryString()});
+        syncDataToQuery();
       };
 
-      var updateInputs = function () {
-        $scope.select = $scope.query.select.join('\n');
-        $scope.from = $scope.query.from.join('\n');
-        $scope.where = $scope.query.where.join('\n');
-        $scope.groupBy = $scope.query.groupBy.join('\n');
-        $scope.orderBy = $scope.query.orderBy.join('\n');
-      }
+      $scope.toggleQueryInput = function() {
+        $scope.showControls = !$scope.showControls;
+        if (!$scope.showControls) {
+          saveQuery();
+        }
+      };
 
       $scope.toggleGroupBy = function(col) {
         if (col < $scope.query.groupBy.length) {
@@ -115,7 +140,8 @@ angular.module('sqltable', [
           $scope.query.select = ['count(*)'];
         }
         updateInputs();
-        $scope.data = sqltableServer.get({'query':$scope.queryString()});
+        syncDataToQuery();
+        saveQuery();
       };
 
       $scope.toggleExpandRow = function(row, col) {
@@ -161,6 +187,16 @@ angular.module('sqltable', [
         } else {
           console.log('nothing to drill');
         }
+      };
+
+      $scope.seeAll = function() {
+        $state.go('table', {
+          select: '*',
+          from: $scope.query.from.join('\n'),
+          where: '',
+          groupBy: '',
+          orderBy: '',
+        });
       };
 
       // Initialization

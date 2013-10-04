@@ -3,7 +3,10 @@
   <table class="table table-condensed sqltable-table">
     <tr>
       <th class="header" colspan="{{data.columnNames.length}}">
-        <div class="query" ng-click="showControls=!showControls">{{queryString()}}</div>
+        <div class="query">
+          <span ng-click="toggleQueryInput()">{{queryString()}}</span>
+          <button type="button" class="btn bt-default btn-xs" ng-click="seeAll()"><span class="glyphicon glyphicon-asterisk"></span></button>
+        </div>
         <form class="form form-inline" ng-show="showControls">
           <div class="form-group">
             <label>Select</label>
