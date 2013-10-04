@@ -174,7 +174,7 @@ angular.module('sqltable', [
             'from': $scope.query.from.slice(0),
             'where': $scope.query.where.slice(0),
             'groupBy': $scope.query.groupBy.slice(0),
-            'orderBy': $scope.query.orderBy.slice(0),
+            'orderBy': [],
           };
 
           var drillGroup = drillQuery['groupBy'].splice(gIndex, 1); // (note: drillGroup is often, but not always equal to colName)
