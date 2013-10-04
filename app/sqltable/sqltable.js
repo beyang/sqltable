@@ -70,17 +70,31 @@ angular.module('sqltable', [
         elem.css('backgroundColor', scope.backgroundColor);
       }
     },
-    controller: function($scope, $state, sqltableServer, queryToString) {
+    controller: function($scope, $state, $timeout, sqltableServer, queryToString) {
       console.log('initing table');
 
-      // Wiring
-      var syncDataToQuery = function() {
+      // Helpers
+      var debounce = function(func, wait) {
+        var timeout = null;
+        return function() {
+          var context = this, args = arguments;
+          var later = function() {
+            timeout = null;
+            func.apply(context, args);
+          };
+          $timeout.cancel(timeout);
+          timeout = $timeout(later, wait);
+        };
+      };
+
+      var syncDataToQueryNow = function() {
         $scope.data = sqltableServer.get({'query':$scope.queryString()}, function(){
           $scope.error = undefined;
         }, function(response) {
           $scope.error = response.data;
         });
       };
+      var syncDataToQuery = debounce(syncDataToQueryNow, 500);
 
       var saveQuery = function() {
         if (!$scope.notRoot) {
@@ -103,12 +117,14 @@ angular.module('sqltable', [
         $scope.orderBy = $scope.query.orderBy.join('\n');
       }
 
+      // State
       $scope.showControls = false;
       $scope.rowSubQueries = {};
       $scope.queryString = function() {
         return queryToString($scope.query);
       }
 
+      // Handlers
       $scope.updateQuery = function() {
         $scope.query = {
           'select': ($scope.select ? $scope.select.split('\n') : []),
