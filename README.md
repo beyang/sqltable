@@ -1,6 +1,6 @@
 SQL Table
 =========
-Because it's not rocket science; it's just SQL.
+Simple web-based tool for exploring SQL dataset.  A work-in-progress.
 
 Attributions
 ============
