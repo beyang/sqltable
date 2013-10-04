@@ -76,7 +76,6 @@ angular.module('sqltable', [
         $scope.data = sqltableServer.get({'query':$scope.queryString()}, function(){
           $scope.error = undefined;
         }, function(response) {
-          console.log(response);
           $scope.error = response.data;
         });
       };
@@ -89,9 +88,6 @@ angular.module('sqltable', [
           groupBy: $scope.query.groupBy.join('\n'),
           orderBy: $scope.query.orderBy.join('\n'),
         });
-        setTimeout(function() {
-          console.log($scope.select);
-        }, 100);
         syncDataToQuery();
       };
 
@@ -185,10 +181,7 @@ angular.module('sqltable', [
           } else {
             drillQuery['select'] = ['count(*)'];
           }
-
-          // console.log(queryToString(drillQuery));
           $scope.rowSubQueries[row] = drillQuery;
-
         } else {
           console.log('nothing to drill');
         }
